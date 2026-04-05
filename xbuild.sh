@@ -1,21 +1,43 @@
 #!/bin/bash
+set -e
 
-conan install . --output-folder=build --build=missing
-cd build
+BUILD_TYPE="Debug"
+PRESET_NAME="conan-debug"
+TEST=false
 
- #------------------ google tests
-if [[ "$1" == "--test" ]]; then
-    
-    cmake -S .. -B . -DBUILD_TESTING=ON -DCMAKE_TOOLCHAIN_FILE=build/build/Release/generators/conan_toolchain.cmake -DCMAKE_BUILD_TYPE=Release
-    make
+while getopts "rdt" opt; do
+  case $opt in
+    r) BUILD_TYPE="Release"; PRESET_NAME="conan-release" ;;
+    d) BUILD_TYPE="Debug";   PRESET_NAME="conan-debug" ;;
+    t) TEST=true ;;
+    *) echo "Usage: ./xbuild.sh [-r] [-d] [-t]"; exit 1 ;;
+  esac
+done
 
-    ctest --output-on-failure   # Run tests with output on failure
+echo "--- Starting Build ($BUILD_TYPE) ---"
 
-    echo ""
-    echo "All tests completed!"
-    
-#------------------ normal build
-else 
-    cmake -S .. -B . -DCMAKE_TOOLCHAIN_FILE=build/build/Release/generators/conan_toolchain.cmake -DCMAKE_BUILD_TYPE=Release
-    make
+conan profile detect --force >/dev/null 2>&1
+
+conan install . --output-folder=. --build=missing --update -s build_type=$BUILD_TYPE
+
+echo "Configuring CMake..."
+
+if [ "$TEST" = true ]; then
+    cmake --preset $PRESET_NAME -DBUILD_TESTING=ON
+else
+    cmake --preset $PRESET_NAME
 fi
+
+echo "Building project..."
+
+
+cmake --build --preset $PRESET_NAME
+
+if [ "$TEST" = true ]; then
+    echo -e "\nRunning Tests..."
+    cd build/$BUILD_TYPE
+    ctest --output-on-failure
+    cd ../..
+fi
+
+echo -e "\n[SUCCESS] Build complete!"
