@@ -1,4 +1,5 @@
 #pragma once
+
 #include <cstdlib>
 
 namespace nbkit
@@ -18,11 +19,11 @@ namespace nbkit
                 instance_ = new T();
 
                 // callback to destroy singleton when program exits normally
-                static bool atexit_registered_ = false;
-                if (!atexit_registered_)
+                static bool atexit_registered = false;
+                if (!atexit_registered)
                 {
-                    std::atexit([](){ DeleteInstance(instance_); instance_ = nullptr; });
-                    atexit_registered_ = true;
+                    std::atexit([]() { DeleteInstance(instance_); instance_ = nullptr; });
+                    atexit_registered = true;
                 }
             }
 

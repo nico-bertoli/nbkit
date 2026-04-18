@@ -1,7 +1,8 @@
 #pragma once
-#include <cstdlib>
-#include <cmath>
+
 #include <cassert>
+#include <cmath>
+#include <cstdlib>
 
 namespace nbkit
 {
@@ -9,22 +10,19 @@ namespace nbkit
     {
         inline double GetRandomDouble(double min, double max)
         {
-            assert(min<=max);
+            assert(min <= max);
 
-            double r = rand() / static_cast<double>(RAND_MAX);
+            double r = std::rand() / static_cast<double>(RAND_MAX);
             return ((max - min) * r + min);
         }
 
-        inline int GetRandomInt(int minInclusive, int maxInclusive)
+        inline int GetRandomInt(int min_inclusive, int max_inclusive)
         {
-            assert(minInclusive <= maxInclusive);
-            
-            return minInclusive + std::rand() % (maxInclusive - minInclusive + 1);
+            assert(min_inclusive <= max_inclusive);
+
+            return min_inclusive + std::rand() % (max_inclusive - min_inclusive + 1);
         }
 
-        inline bool GetRandomBool()
-        {
-            return GetRandomInt(0, 1) == 0;
-        }
+        inline bool GetRandomBool() { return GetRandomInt(0, 1) == 0; }
     }
 }

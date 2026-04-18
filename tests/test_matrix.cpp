@@ -1,8 +1,9 @@
-#include <gtest/gtest.h>
-#include <nbkit/matrix.h>
-#include <vector>
+#include "nbkit/matrix.h"
+
 #include <algorithm>
+#include <gtest/gtest.h>
 #include <numeric>
+#include <vector>
 
 template<typename T>
 using Matrix = nbkit::Matrix<T>;

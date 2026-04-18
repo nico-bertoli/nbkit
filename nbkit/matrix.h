@@ -1,6 +1,7 @@
 #pragma once
-#include <vector>
+
 #include <iterator>
+#include <vector>
 
 namespace nbkit
 {
@@ -17,7 +18,7 @@ namespace nbkit
 
         // -------------------------------------------------------------------- methods
     public:
-        Matrix() : Matrix(0) {};
+        Matrix() : Matrix(0) {}
         Matrix(size_t width) : width_(width) { vector_.resize(width); }
 
         Matrix(size_t width, const std::vector<T>& vect) : width_(width)
@@ -47,7 +48,7 @@ namespace nbkit
             // iterator traits
             using iterator_category = std::random_access_iterator_tag;
             using value_type = T;
-            using difference_type = std::ptrdiff_t; 
+            using difference_type = std::ptrdiff_t;
             using pointer = T*;
             using reference = T&;
 

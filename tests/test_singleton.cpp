@@ -1,6 +1,7 @@
+#include "nbkit/singleton.h"
+
 #include <gtest/gtest.h>
-#include <nbkit/singleton.h>
-#include <vector>
+
 #include <string>
 #include <type_traits>
 
@@ -55,25 +56,25 @@ protected:
 
 TEST_F(SingletonTest, CopyPrevented)
 {
-    static_assert(!std::is_copy_constructible_v<SingletonInt>, 
+    static_assert(!std::is_copy_constructible_v<SingletonInt>,
                   "SingletonInt should not be copy constructible");
-    
-    static_assert(!std::is_copy_assignable_v<SingletonInt>, 
+
+    static_assert(!std::is_copy_assignable_v<SingletonInt>,
                   "SingletonInt should not be copy assignable");
-    
-    static_assert(!std::is_move_constructible_v<SingletonInt>, 
+
+    static_assert(!std::is_move_constructible_v<SingletonInt>,
                   "SingletonInt should not be move constructible");
-    
-    static_assert(!std::is_move_assignable_v<SingletonInt>, 
+
+    static_assert(!std::is_move_assignable_v<SingletonInt>,
                   "SingletonInt should not be move assignable");
 }
 
 TEST_F(SingletonTest, InstantiationPrevented)
 {
-    static_assert(!std::is_default_constructible_v<SingletonInt>, 
+    static_assert(!std::is_default_constructible_v<SingletonInt>,
                   "SingletonInt should not be directly constructible");
-    
-    static_assert(!std::is_default_constructible_v<SingletonString>, 
+
+    static_assert(!std::is_default_constructible_v<SingletonString>,
                   "SingletonString should not be directly constructible");
 }
 

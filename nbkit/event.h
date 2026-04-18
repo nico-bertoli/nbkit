@@ -1,7 +1,7 @@
 #pragma once
 
-#include <vector>
 #include <functional>
+#include <vector>
 
 namespace nbkit
 {
@@ -10,7 +10,7 @@ namespace nbkit
     {
     //---------------------------------------------------------- fields
     private:
-        std::vector< std::function<void(Args...)>> callbacks_;
+        std::vector<std::function<void(Args...)>> callbacks_;
 
     //---------------------------------------------------------- methods
     public:
