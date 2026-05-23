@@ -31,12 +31,11 @@ inline constexpr std::array<Channel, 2> kEnabledChannels =
 #define NBKIT_COLOR_OVERRIDE
 namespace detail
 {
-    inline constexpr const char* kColorReset   = "\033[0m";
-    inline constexpr const char* kColorVerbose = "\033[90m";
-    inline constexpr const char* kColorInfo    = "\033[32m";
-    inline constexpr const char* kColorSparkle = "\033[36m";
-    inline constexpr const char* kColorWarning = "\033[33m";
-    inline constexpr const char* kColorError   = "\033[31m";
+    inline constexpr const char* kColorVerbose = "\x1b[0;38;2;148;148;148m";
+    inline constexpr const char* kColorInfo    = "\x1b[0;38;2;0;255;64m";
+    inline constexpr const char* kColorSparkle = "\x1b[0;38;2;0;179;255m";
+    inline constexpr const char* kColorWarning = "\x1b[0;38;2;255;247;0m";
+    inline constexpr const char* kColorError   = "\x1b[0;38;2;255;0;0m";
 }
 
 }
