@@ -1,5 +1,7 @@
 # CMake
 **/build/
+build_conan/
+CMakeUserPresets.json
 CMakeFiles/
 CMakeCache.txt
 cmake_install.cmake
@@ -65,5 +67,3 @@ conan.lock
 conanbuildinfo.*
 conaninfo.txt
 *.conan
-
-CMakeUserPresets.json

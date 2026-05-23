@@ -25,6 +25,9 @@ class NbkitConan(ConanFile):
     def layout(self):
         cmake_layout(self)
 
+    def requirements(self):
+        self.requires("magic_enum/0.8.0")
+
     def build_requirements(self):
         self.test_requires("gtest/1.15.0")
 

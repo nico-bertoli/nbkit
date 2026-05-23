@@ -26,6 +26,10 @@ target_include_directories(
     $<INSTALL_INTERFACE:include>
 )
 
+#----------------------- link magic enum
+find_package(magic_enum REQUIRED)
+target_link_libraries(${PROJECT_NAME} PUBLIC magic_enum::magic_enum)
+
 #----------------------- installation logic
 install(
     TARGETS ${PROJECT_NAME}
@@ -44,18 +48,8 @@ install(DIRECTORY nbkit/
 option(BUILD_TESTING "Build the testing tree" OFF)
 
 if(BUILD_TESTING)
-    enable_testing() 
+    enable_testing()
     find_package(GTest REQUIRED)
-    
-    file(GLOB_RECURSE TEST_FILES "${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp") 
-    
-    if(TEST_FILES)
-        add_executable(${PROJECT_NAME}_tests ${TEST_FILES})  
-        target_link_libraries(${PROJECT_NAME}_tests PRIVATE ${PROJECT_NAME} GTest::gtest_main) 
-        
-        include(GoogleTest)  
-        gtest_discover_tests(${PROJECT_NAME}_tests)
-    else()
-        message(WARNING "No test files found in ${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp. Skipping test target creation.")
-    endif()
+    include(GoogleTest)
+    add_subdirectory(tests)
 endif()
