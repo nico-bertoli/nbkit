@@ -8,17 +8,17 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 #----------------------- find source files
 file(
-    GLOB_RECURSE SOURCES 
-    "${CMAKE_CURRENT_SOURCE_DIR}/nbkit/*.cpp" 
-    "${CMAKE_CURRENT_SOURCE_DIR}/nbkit/*.h"
+    GLOB_RECURSE SOURCES
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/nbkit/*.h"
 )
 
 #----------------------- create library
 add_library(${PROJECT_NAME} ${SOURCES})
 
 target_include_directories(
-    ${PROJECT_NAME} PUBLIC 
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+    ${PROJECT_NAME} PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>
 )
 
@@ -35,7 +35,7 @@ install(
     RUNTIME DESTINATION bin
 )
 
-install(DIRECTORY nbkit/
+install(DIRECTORY include/nbkit/
     DESTINATION include/nbkit
     FILES_MATCHING PATTERN "*.h"
 )

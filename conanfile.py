@@ -6,7 +6,7 @@ import os
 class NbkitConan(ConanFile):
     
     settings = "os", "compiler", "build_type", "arch"
-    exports_sources = "CMakeLists.txt", "nbkit/*", "tests/*"
+    exports_sources = "CMakeLists.txt", "src/*", "include/nbkit/*", "tests/*"
 
     def layout(self):
         cmake_layout(self)
