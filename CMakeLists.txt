@@ -13,10 +13,6 @@ file(
     "${CMAKE_CURRENT_SOURCE_DIR}/nbkit/*.h"
 )
 
-if(NOT SOURCES)
-    message(FATAL_ERROR "No source files found in the nbkit directory!")
-endif()
-
 #----------------------- create library
 add_library(${PROJECT_NAME} ${SOURCES})
 
