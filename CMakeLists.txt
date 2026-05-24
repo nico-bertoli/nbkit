@@ -7,18 +7,16 @@ set(CMAKE_CXX_STANDARD_REQUIRED YES)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 #----------------------- find source files
-file(
-    GLOB_RECURSE SOURCES
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/include/nbkit/*.h"
+file(GLOB_RECURSE SOURCES
+    "${CMAKE_CURRENT_SOURCE_DIR}/nbkit/*.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/nbkit/*.h"
 )
 
 #----------------------- create library
 add_library(${PROJECT_NAME} ${SOURCES})
 
-target_include_directories(
-    ${PROJECT_NAME} PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+target_include_directories(${PROJECT_NAME} PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
     $<INSTALL_INTERFACE:include>
 )
 
@@ -27,15 +25,14 @@ find_package(magic_enum REQUIRED)
 target_link_libraries(${PROJECT_NAME} PUBLIC magic_enum::magic_enum)
 
 #----------------------- installation logic
-install(
-    TARGETS ${PROJECT_NAME}
+install(TARGETS ${PROJECT_NAME}
     EXPORT ${PROJECT_NAME}Targets
     LIBRARY DESTINATION lib
     ARCHIVE DESTINATION lib
     RUNTIME DESTINATION bin
 )
 
-install(DIRECTORY include/nbkit/
+install(DIRECTORY nbkit/
     DESTINATION include/nbkit
     FILES_MATCHING PATTERN "*.h"
 )
@@ -44,16 +41,16 @@ install(DIRECTORY include/nbkit/
 option(BUILD_TESTING "Build the testing tree" OFF)
 
 if(BUILD_TESTING)
-    enable_testing() 
+    enable_testing()
     find_package(GTest REQUIRED)
-    
-    file(GLOB_RECURSE TEST_FILES "${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp") 
-    
+
+    file(GLOB_RECURSE TEST_FILES "${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp")
+
     if(TEST_FILES)
-        add_executable(${PROJECT_NAME}_tests ${TEST_FILES})  
-        target_link_libraries(${PROJECT_NAME}_tests PRIVATE ${PROJECT_NAME} GTest::gtest_main) 
-        
-        include(GoogleTest)  
+        add_executable(${PROJECT_NAME}_tests ${TEST_FILES})
+        target_link_libraries(${PROJECT_NAME}_tests PRIVATE ${PROJECT_NAME} GTest::gtest_main)
+
+        include(GoogleTest)
         gtest_discover_tests(${PROJECT_NAME}_tests)
     else()
         message(WARNING "No test files found in ${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp. Skipping test target creation.")
